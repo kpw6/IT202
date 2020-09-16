@@ -1,3 +1,3 @@
 <?php
-echo strlen("Welcome to hello"); // outputs 12
+echo "\nWelcome";
 ?>
