@@ -4,7 +4,7 @@ foreach($numbers as $num)
 {
 	if ($day % 2 == 0)
 	{
-		echo "$day\n" ;
+		echo "$num\n" ;
 	}
 }
 ?>
