@@ -1,7 +1,9 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <form method="POST">
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required/>
+    <input type="email" id="email" name="email"/>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"/>
     <label for="p1">Password:</label>
     <input type="password" id="p1" name="password" required/>
     <input type="submit" name="login" value="Login"/>
@@ -11,26 +13,35 @@
 if (isset($_POST["login"])) {
     $email = null;
     $password = null;
+    $username = null;
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
     }
+    if (isset($_POST["username"])) {
+        $username = $_POST["username"];
+        }
     if (isset($_POST["password"])) {
         $password = $_POST["password"];
     }
     $isValid = true;
-    if (!isset($email) || !isset($password)) {
+    if (!isset($email) || !isset($password) || !isset($username)) {
         $isValid = false;
     }
-    if (!strpos($email, "@")) {
+    if ($email != "" && $username != "") {
         $isValid = false;
-        echo "<br>Invalid email<br>";
+        flash("Please only use an Email or Username");
     }
     if ($isValid) {
         $db = getDB();
         if (isset($db)) {
-            $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email = :email LIMIT 1");
-
-            $params = array(":email" => $email);
+            $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email = :email or username = :email");
+            
+            if ($username == "") {
+              $params = array(":email" => $email);
+            }
+            else if ($email == "") {
+              $params = array(":email" => $username);
+            }
             $r = $stmt->execute($params);
             echo "db returned: " . var_export($r, true);
             $e = $stmt->errorInfo();
@@ -56,7 +67,8 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
                         $_SESSION["user"]["roles"] = [];
                     }
                     //on successful login let's serve-side redirect the user to the home page.
-                    header("Location: home.php");
+                    flash("Log in successful");
+                    die(header("Location: profile.php"));
                 }
                 else {
                     echo "<br>Invalid password, get out!<br>";
@@ -71,4 +83,5 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
         echo "There was a validation issue";
     }
 }
-?>
+?> 
+<?php require(__DIR__ . "/partials/flash.php");

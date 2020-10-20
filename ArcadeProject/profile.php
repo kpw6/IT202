@@ -120,3 +120,4 @@ if (isset($_POST["saved"])) {
     <input type="password" name="confirm"/>
     <input type="submit" name="saved" value="Save Profile"/>
 </form>
+<?php require(__DIR__ . "/partials/flash.php");
