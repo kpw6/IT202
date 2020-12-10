@@ -1,2 +1,2 @@
 ALTER TABLE Users
-    ADD COLUMN username varchar(60) default '';
+    MODIFY points int Default 1;

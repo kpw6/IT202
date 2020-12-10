@@ -34,7 +34,7 @@ if (isset($_POST["login"])) {
     if ($isValid) {
         $db = getDB();
         if (isset($db)) {
-            $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email = :email or username = :email");
+            $stmt = $db->prepare("SELECT id, email, username, password, points from Users WHERE email = :email or username = :email");
             
             if ($username == "") {
               $params = array(":email" => $email);

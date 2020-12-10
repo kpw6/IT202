@@ -37,7 +37,7 @@ $stmt = $db->prepare("SELECT user_id, score, Users.username FROM CarScores as us
     }
    }
  }
-
+safer_echo("points: " . getBalance());
 ?>
 
 <?php require(__DIR__ . "/partials/flash.php");

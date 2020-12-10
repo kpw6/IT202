@@ -70,24 +70,10 @@ function getMessages() {
 
 //end flash
 
-function getState($n) {
-    switch ($n) {
-        case 0:
-            echo "Baby";
-            break;
-        case 1:
-            echo "Teenager";
-            break;
-        case 2:
-            echo "Adult";
-            break;
-        case 3:
-            echo "Dead";
-            break;
-        default:
-            echo "Unsupported state: " . safer_echo($n);
-            break;
+function getBalance() {
+  if (is_logged_in() && isset($_SESSION["user"]["points"])) {
+        return $_SESSION["user"]["points"];
     }
+    return 0;
 }
-
 ?>
