@@ -6,6 +6,7 @@
 $db = getDB();
 //save data if we submitted the form
 if (isset($_POST["saved"])) {
+    $private = $_POST["private"];
     $isValid = true;
     //check if our email changed
     $newEmail = get_email();
@@ -58,8 +59,8 @@ if (isset($_POST["saved"])) {
         }
     }
     if ($isValid) {
-        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username where id = :id");
-        $r = $stmt->execute([":email" => $newEmail, ":username" => $newUsername, ":id" => get_user_id()]);
+        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username, private = :private where id = :id");
+        $r = $stmt->execute([":email" => $newEmail, ":username" => $newUsername, ":id" => get_user_id(), ":private" => $private]);
         if ($r) {
             echo "Updated profile";
         }
@@ -113,6 +114,11 @@ if (isset($_POST["saved"])) {
     <input type="password" name="password"/>
     <label for="cpw">Confirm Password</label>
     <input type="password" name="confirm"/>
+    <label for="cpw">Make Private</label>
+    	<select name="private" value="<?php echo $result["private"];?>">
+		<option value="0">false</option>
+                <option value="1">true</option>
+	</select>
     <input type="submit" name="saved" value="Save Profile"/>
 </form>
 <?php require(__DIR__ . "/partials/flash.php");

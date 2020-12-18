@@ -70,6 +70,7 @@ if ($r) {
 else {
     flash("There was a problem looking up competitions: " . var_export($stmt->errorInfo(), true), "danger");
 }
+getCompetitionResults();
 ?>
     <div class="container-fluid">
         <h3>Competitions</h3>
@@ -79,7 +80,7 @@ else {
                     <div class="list-group-item">
                         <div class="row">
                             <div class="col">
-                                <?php safer_echo("Name: " . $r["name"]); ?>
+                                <?php safer_echo("Name: " . createProfileLink($r["name"])); ?>
                             </div>
                             <div class="col">
                                 <?php safer_echo("# of Participants: " . $r["participants"]); ?>
