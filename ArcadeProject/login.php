@@ -34,7 +34,7 @@ if (isset($_POST["login"])) {
     if ($isValid) {
         $db = getDB();
         if (isset($db)) {
-            $stmt = $db->prepare("SELECT id, email, username, password, points from Users WHERE email = :email or username = :email");
+            $stmt = $db->prepare("SELECT id, email, username, password, points, private from Users WHERE email = :email or username = :email");
             
             if ($username == "") {
               $params = array(":email" => $email);
@@ -68,7 +68,7 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
                     }
                     //on successful login let's serve-side redirect the user to the home page.
                     flash("Log in successful");
-                    die(header("Location: profile.php"));
+                    die(header("Location: profile.php?id=" . get_user_id()));
                 }
                 else {
                     echo "<br>Invalid password, get out!<br>";

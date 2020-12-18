@@ -10,25 +10,25 @@
   $reason2 = "2nd Place Competition";
   $reason3 = "3rd Place Competition";
   $stmt = $db->prepare("SELECT id, first_place_per, second_place_per, third_place_per, participants, reward, expired, created FROM Competitions WHERE expired > current_timestamp && paid_out = 0 SORT BY id");
-  $r = $db=>execute();
+  $r = $db->execute();
   if ($r) {
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($results as $r) {
-      if {$r["participants"] > 3) {
+      if ($r["participants"] > 3) {
         $stmt = $db->prepare("SELECT user_id, comp_id FROM CompetitionParticipants WHERE comp_id = :cid");
-        $re = $db=>execute([":cid" = $r["id"]]);
+        $re = $db->execute([":cid" => $r["id"]]);
         if($re) {
           $results2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
           foreach($results2 as $re) {
              $stmt = $db->prepare("SELECT user_id, score, created FROM CarScores");
-             $res = $db=>execute();
+             $res = $db->execute();
              if($res){
                $results3 = $stmt->fetchAll(PDO::FETCH_ASSOC);
                foreach($results3 as $res) {
-                 if($r["created"] > $res["created"] && $res["created"] > $r["expired"] {
+                 if($r["created"] > $res["created"] && $res["created"] > $r["expired"]) {
                    if ($res["score"] < $first) {
                      if($res["score"] < $second) {
-                       if ($res["score" < $third) {
+                       if ($res["score"] < $third) {
                        
                        }
                        else {
@@ -59,7 +59,7 @@
       }
     }
     $stmt = $stmt = $db->prepare("UPDATE Competitions SET paid_out = 1");
-    $res = $db=>execute();
+    $res = $db->execute();
     if ($r) {
       flash("Successful payout of Competition");
     }
@@ -71,7 +71,7 @@
           ":points_change" => $r["first_place_per"]*$r["reward"],
           ":reason" => $reason1
           ];
-          $res = $db=>execute($params);
+          $res = $db->execute($params);
           if($res) {
             flash("PointsHistory Successfully made");
           }
@@ -94,7 +94,7 @@
           ":points_change" => $r["second_place_per"]*$r["reward"],
           ":reason" => $reason2
           ];
-          $res = $db=>execute($params);
+          $res = $db->execute($params);
           if($res) {
             flash("PointsHistory Successfully made");
           }
@@ -117,7 +117,7 @@
           ":points_change" => $r["third_place_per"]*$r["reward"],
           ":reason" => $reason3
           ];
-          $res = $db=>execute($params);
+          $res = $db->execute($params);
           if($res) {
             flash("PointsHistory Successfully made");
           }

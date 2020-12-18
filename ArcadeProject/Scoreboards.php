@@ -24,7 +24,7 @@
    {
    if ($counter < 11)
    {
-    safer_echo("[" . $counter . "]" . "User: " . $r["username"] . " User_id: " . $r["user_id"] . " Score: " . $r["score"]);
+    safer_echo("[" . $counter . "]" . "User: " . createProfileLink($r) . " User_id: " . $r["user_id"] . " Score: " . $r["score"]);
     echo "<br>";
     $counter++;
     }
@@ -36,7 +36,7 @@
    {
    if (strtotime($r["created"]) > $one_week_ago && $counter < 11)
      {
-      safer_echo("[" . $counter . "]" . "User: " . $r["username"] . " User_id: " . $r["user_id"] . " Score: " . $r["score"]);
+      safer_echo("[" . $counter . "]" . "User: " . createProfileLink($r) . " User_id: " . $r["user_id"] . " Score: " . $r["score"]);
       echo "<br>";
       $counter++;
      }
@@ -48,7 +48,7 @@
    {
    if (strtotime($r["created"]) > $one_month_ago && $counter < 11)
      {
-      safer_echo("[" . $counter . "]" . "User: " . $r["username"] . " User_id: " . $r["user_id"] . " Score: " . $r["score"]);
+      safer_echo("[" . $counter . "]" . "User: " . createProfileLink($r) . " User_id: " . $r["user_id"] . " Score: " . $r["score"]);
       echo "<br>";
       $counter++;
      }
